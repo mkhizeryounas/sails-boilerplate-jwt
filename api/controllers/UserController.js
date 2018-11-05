@@ -12,8 +12,8 @@ module.exports = {
       response.status(401).json(
         {
           status: false,
-          error: err
-        } || "Error occoured"
+          error: err || "Error occoured"
+        }
       );
     }
   }

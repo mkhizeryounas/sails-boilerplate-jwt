@@ -1,4 +1,4 @@
-# articlebase
+# Sails JWT Auth Boilerplate
 
 a [Sails v1](https://sailsjs.com) application
 

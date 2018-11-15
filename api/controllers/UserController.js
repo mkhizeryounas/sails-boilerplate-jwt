@@ -1,3 +1,4 @@
+const Joi = require("joi");
 module.exports = {
   index: async (request, response) => {
     response.json({
@@ -8,6 +9,17 @@ module.exports = {
   },
   login: async (request, response) => {
     try {
+      let { error } = Joi.validate(
+        request.body,
+        Joi.object().keys({
+          email: Joi.string()
+            .email()
+            .required(),
+          password: Joi.string().required()
+        })
+      );
+      if (error && error.isJoi)
+        throw { detail: "Validation error", data: error.details };
       let user = await User.findOne({ email: request.body.email });
       if (typeof user === "undefined") throw "Invalid email address";
       await User.checkIfPasswordIsValid(request.body.password, user);
@@ -16,15 +28,28 @@ module.exports = {
         access_token: JwtService.issue({ id: user.id })
       });
     } catch (err) {
-      response.status(401).json({
+      sails.log(err);
+      response.status(400).json({
         status: false,
-        data: {},
-        error: err || "Error occoured"
+        data: err.data || {},
+        error: err.detail || err.stack || "Unknown error occoured"
       });
     }
   },
   signup: async (request, response) => {
     try {
+      let { error } = Joi.validate(
+        request.body,
+        Joi.object().keys({
+          email: Joi.string()
+            .email()
+            .required(),
+          name: Joi.string().required(),
+          password: Joi.string().required()
+        })
+      );
+      if (error && error.isJoi)
+        throw { detail: "Validation error", data: error.details };
       let user = await User.create(request.body).fetch();
       response.json({
         data: user,
@@ -32,10 +57,10 @@ module.exports = {
         message: "Sign Up Successful"
       });
     } catch (err) {
-      response.status(401).json({
+      response.status(400).json({
         status: false,
         data: err,
-        error: err.message || err.stack || "An Error Occured"
+        error: err.detail || err.stack || "Unknown error occoured"
       });
     }
   },
@@ -47,10 +72,10 @@ module.exports = {
         message: "Access token valid"
       });
     } catch (err) {
-      response.status(401).json({
+      response.status(400).json({
         status: false,
         data: err,
-        error: err.message || err.stack || "An Error Occured"
+        error: err.detail || err.stack || "Unknown error occoured"
       });
     }
   }

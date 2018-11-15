@@ -12,6 +12,7 @@
     "bcryptjs": "^2.4.3",
     "express-jwt": "^5.3.1",
     "grunt": "^1.0.3",
+    "joi": "^14.0.6",
     "jsonwebtoken": "^8.3.0",
     "sails": "^1.0.2",
     "sails-hook-grunt": "^3.0.2",

@@ -8,6 +8,8 @@ module.exports = async function(request, response, next) {
           throw err;
         }
         request.user = await User.findOne({ id: decode.id });
+        // sails.log(request.options);
+        // check scopes here
         return next();
       } catch (error) {
         response.status(401).json({

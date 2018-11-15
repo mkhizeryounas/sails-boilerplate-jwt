@@ -21,7 +21,8 @@ module.exports = {
       if (error && error.isJoi)
         throw { detail: "Validation error", data: error.details };
       let user = await User.findOne({ email: request.body.email });
-      if (typeof user === "undefined") throw "Invalid email address";
+      if (typeof user === "undefined")
+        throw { detail: "Invalid email address" };
       await User.checkIfPasswordIsValid(request.body.password, user);
       response.json({
         user: user,

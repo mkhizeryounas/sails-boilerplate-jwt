@@ -12,6 +12,7 @@ module.exports = async function(request, response, next) {
       } catch (error) {
         response.status(401).json({
           error: "Authentication error, invalid 'access_token' passed",
+          data: {},
           response: error
         });
       }
@@ -19,7 +20,7 @@ module.exports = async function(request, response, next) {
   } else {
     response.status(401).json({
       status: false,
-      responseCode: 401,
+      data: {},
       error:
         "Authentication error, 'Authorization' header is missing or invalid"
     });

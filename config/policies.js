@@ -3,7 +3,6 @@ module.exports.policies = {
   "user/*": "isLoggedIn",
   UserController: {
     login: true,
-    create: true,
     signup: true
   }
 };

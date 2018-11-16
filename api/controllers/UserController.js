@@ -25,11 +25,14 @@ module.exports = {
         throw { detail: "Invalid email address" };
       await User.checkIfPasswordIsValid(request.body.password, user);
       response.json({
-        user: user,
-        access_token: JwtService.issue({ id: user.id })
+        status: true,
+        data: {
+          user: user,
+          access_token: JwtService.issue({ id: user.id })
+        },
+        message: "Login successful"
       });
     } catch (err) {
-      sails.log(err);
       response.status(400).json({
         status: false,
         data: err.data || {},

@@ -13,6 +13,12 @@
  * https://sailsjs.com/docs/concepts/models-and-orm/model-settings
  */
 
+let migrate_db = "safe";
+if (process.env.migrate_db == "true") {
+  migrate_db = "alter";
+}
+console.log("💾 Database Migrated:", migrate_db);
+
 module.exports.models = {
   /***************************************************************************
    *                                                                          *
@@ -50,7 +56,7 @@ module.exports.models = {
    *                                                                          *
    ***************************************************************************/
 
-  migrate: "safe",
+  migrate: migrate_db,
 
   /***************************************************************************
    *                                                                          *

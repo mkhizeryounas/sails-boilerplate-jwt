@@ -26,6 +26,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=production node app.js",
+    "migrate_db": "migrate_db=true node app.js",
     "dev": "nodemon app.js",
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "eslint . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
